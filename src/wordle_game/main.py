@@ -1,12 +1,13 @@
 import sys
 from wonderwords import RandomWord
 from colorama import Fore, init
+import string
 
 # COLOROMA BLOCKS
 init(autoreset=True)
-RED_BACKGROUND = '\033[41m'
-YELLOW_BACKGROUND = '\033[43m'
-GREEN_BACKGROUND = '\033[42m'
+# RED_BACKGROUND = '\033[41m'
+# YELLOW_BACKGROUND = '\033[43m'
+# GREEN_BACKGROUND = '\033[42m'
 RESET = '\033[0m'
 
 
@@ -17,7 +18,7 @@ WORDLE - Terminal Version
 A simple word-guessing game.
 
 Usage:
-    python wordle.py [--start] [--settings] [--help]
+    python main.py [--start] [--settings] [--help]
 
 Options:
     --start       Start the game with default settings (5 attempts, 5-letter word).
@@ -45,13 +46,23 @@ def settings_mode():
     min_word_length = 5
     settings_done = False
 
+    state = "Default Settings"
+    
     while settings_done == False:
 
 
         print("----SETTINGS MODE----")
-        print(Fore.CYAN + f"Default settings : Attempts {attempts} | Word Length = {word_length}")
-        print(Fore.CYAN + f"Max settings : Attempts {max_attempts} | Word Length = Max >{max_word_length} , Min > {min_word_length} ")
-        input_settings = input("Settings\n[1] Attempts\n[2] Word Length\n[Q] Quit\n[D]Done\nChoose > ")
+        
+        print(Fore.CYAN + f"{state} : Attempts {attempts} | Word Length = {word_length}")
+        
+        print(Fore.CYAN + f"Max settings : Attempts {max_attempts} | Word Length = Max > {max_word_length} , Min > {min_word_length} ")
+        
+        print("Settings")
+        print("[1] Attempts")
+        print("[2] Word Length")
+        print("[Q] Quit")
+        print("[D] Done")
+        input_settings = input("Choose > ")
 
         if "D" in input_settings or "d" in input_settings:
             print(Fore.GREEN + "Settings Done - Taking no more changes")
@@ -61,6 +72,7 @@ def settings_mode():
             print(Fore.RED + "Exiting")
             sys.exit(0)
 
+        
         if "1" in input_settings:
 
             try:
@@ -70,6 +82,8 @@ def settings_mode():
                     print(Fore.RED + f"Supported Max attempts : {max_attempts}")
                 if attempts <= 0:
                     print(Fore.RED + "Zero and -ve numbers arent allowed")
+                else:
+                    state = "Changed Settings"
 
             except ValueError as e:
                 print(f"{e}")
@@ -110,6 +124,9 @@ def start_mode(attempts, word_length):
 
     print(Fore.MAGENTA + "<><><> WELCOME TO WORDLE <><><>")
 
+    all_letters = list(string.ascii_lowercase)
+    unused_letters = all_letters.copy()
+    
     input_word = ""
     while input_word != generated_word:
 
@@ -119,42 +136,58 @@ def start_mode(attempts, word_length):
             print(f"Existing program | Random word > {generated_word} | Attempts > {attempts}")
             sys.exit(1)
 
+        if "--help" == input_word:
+            help()
+            sys.exit(0)
+
         if len(input_word) != word_length:
-            print(Fore.RED + "PLease enter 5 letter word only")
+            print(Fore.RED + f"PLease enter {word_length} letter word only")
             continue
 
         for index, char in enumerate(input_word):
 
             if char == generated_letters[index]:
-                print(Fore.GREEN + char + RESET , end=" ")                     # end="" skips \n and prints in line
+                print(Fore.GREEN + char , end=" ")                     # end="" skips \n and prints in line
                 correct_letters.add(char)
+                misplaced_letters.discard(char)                         #.remove(elem) removes elem from the set but raises a KeyError if elem is not present in the set.
+                if char in unused_letters:                              # .discard(elem) removes elem if present but does nothing and raises no error if elem is absent.
+                    unused_letters.remove(char)
 
             elif char in generated_letters:
-                print(Fore.YELLOW + char + RESET , end=" ")
+                print(Fore.YELLOW + char , end=" ")
                 misplaced_letters.add(char)
-
+                if char in unused_letters:
+                    unused_letters.remove(char)
+                
             else:
-                print(Fore.RED + char + RESET , end=" ")
+                print(Fore.RED + char , end=" ")
                 wrong_letters.add(char)
+                if char in unused_letters:
+                    unused_letters.remove(char)
+            
 
         guessed += 1
 
         print("\n")
-        print(f"{GREEN_BACKGROUND} CORRECT LETTERS {RESET} >>> {sorted(correct_letters)}")
-        print(f"{YELLOW_BACKGROUND} MISPLACED LETTERS {RESET} >>> {sorted(misplaced_letters)}")
-        print(f"{RED_BACKGROUND} WRONG LETTERS {RESET} >>> {sorted(wrong_letters)}")
-        print("\n")
-        print(Fore.CYAN + f"Attempts {guessed}")
+        print(Fore.YELLOW + "CURRENTLY MISPLACED LETTERS >>>", sorted(misplaced_letters) or "None")
+        print(Fore.GREEN + f"CORRECT LETTERS >>> {sorted(correct_letters) if correct_letters else 'None'}")
+        print(Fore.RED + f"WRONG LETTERS >>> {sorted(wrong_letters) if wrong_letters else 'None'}")
+        print(f"UNUSED LETTERS >>> {sorted(unused_letters)}")
+        print(Fore.CYAN + f"Attempts {guessed}\n")
 
     # Attempts check
+    
+        if input_word == generated_word:
+            print(Fore.GREEN + f"Congrats you have guessed it : {generated_word}")
+            
         if attempts > 5 and guessed >= (attempts - 2):
             print("Wanna quit ? use \"--quit\" \n ")
+            
         if guessed == attempts:
             print(Fore.CYAN + f"Better luck next time ! | Random word > " + Fore.GREEN + generated_word + Fore.CYAN + " | Attempts > " + Fore.YELLOW + str(attempts))
             sys.exit(1)
 
-        if input_word == generated_word:
-            print(Fore.GREEN + f"Congrats you have guessed it : {generated_word}")
+        
 
 def main():
 
