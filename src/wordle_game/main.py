@@ -3,11 +3,9 @@ from wonderwords import RandomWord
 from colorama import Fore, init
 import string
 
-# COLOROMA BLOCKS
+
 init(autoreset=True)
-# RED_BACKGROUND = '\033[41m'
-# YELLOW_BACKGROUND = '\033[43m'
-# GREEN_BACKGROUND = '\033[42m'
+
 RESET = '\033[0m'
 
 
@@ -85,7 +83,7 @@ def settings_mode():
                 else:
                     state = "Changed Settings"
 
-            except ValueError as e:
+            except ValueError as e: 
                 print(f"{e}")
             except Exception as e:
                     print(f"{e}")
