@@ -25,12 +25,12 @@ This version supports custom attempts, custom word length, color-coded feedback,
 Make sure you have the required libraries installed:
 
 ```bash
-pip install wonderwords colorama
+pip install -r requirements.txt
 ```
 
 ---
 
-## **🚀 Usage**
+## **Syntax**
 
 Run the program from the terminal:
 
@@ -71,6 +71,12 @@ Commands inside settings mode:
 ---
 
 ## **🕹️ How to Play**
+
+To start the game :
+
+```bash
+python main.py --start
+```
 
 During the game:
 
