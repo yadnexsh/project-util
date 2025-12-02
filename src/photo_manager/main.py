@@ -16,7 +16,7 @@ today = datetime.now().strftime("%Y-%m-%d")
 
 
 def help():
-    help_text = """Help text"""
+    help_text = """Help text""" 
     print(help_text)
     
 def setup_mode():
