@@ -38,7 +38,17 @@ def list_files(directory):
         path = os.path.join(directory, filename)
         print(path)
         
-        
+
+def unique_subfolder(main_folder, sub):
+
+    counter = 1
+    while True:
+        unique_name = f"{sub}{counter}"
+        unique = os.path.join(main_folder, unique_name)
+        if not os.path.exists(unique):
+            return unique
+        counter += 1
+    
 def organize_files(directory, dry_run=False):
     
     list_directory = os.listdir(directory)
@@ -56,7 +66,8 @@ def organize_files(directory, dry_run=False):
             sub = split[1].strip()                                      # to remve space
             
             main_folder = os.path.join(directory, main)
-            sub_folder = os.path.join(main_folder, sub)
+            sub_folder = unique_subfolder(main_folder, sub)
+
             
             if dry_run:
                 print(f"Code would make {main_folder} and {sub_folder}")
@@ -81,6 +92,7 @@ def organize_files(directory, dry_run=False):
             
         else:
             print(f"{folder} | Not Required")
+            
 def main():
     
     if len(sys.argv) < 2:                                       
