@@ -64,7 +64,7 @@ You can configure:
 
 Commands inside settings mode:
 
-![Example](.\media\settings_example.png "settings example")
+![Example](./media/settings_example.png "settings example")
 
 ---
 
@@ -100,7 +100,7 @@ The game ends when:
 ## **Example Gameplay Output**
 
 
-![Example](.\media\wordle_example.png "Wordle example")
+![Example](./media/wordle_example.png "Wordle example")
 
 
 
