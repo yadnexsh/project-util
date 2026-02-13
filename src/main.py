@@ -1,7 +1,4 @@
 import sys
-import string
-from collections import Counter
-
 from wonderwords import RandomWord
 from colorama import Fore, init
 
