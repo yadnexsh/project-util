@@ -1,12 +1,13 @@
 
-# **WORDLE – Terminal Version**
+![Project Header](https://capsule-render.vercel.app/api?type=blur&height=300&color=gradient&text=Terminal%20Wordle&desc=Python%20CLI%20Game&descAlign=50&descAlignY=64)
 
-A simple, colorful terminal-based recreation of the classic **Wordle** game, powered by Python.
+<div align="center">
+A simple, colorful terminal-based recreation of the classic Wordle game, powered by Python.
 This version supports custom attempts, custom word length, color-coded feedback, and CLI flags for quick control.
+</div>
 
 ---
-
-## **🎮 Features**
+## Features
 
 * Play Wordle directly in your terminal
 * Adjustable **attempts** and **word length**
@@ -18,9 +19,9 @@ This version supports custom attempts, custom word length, color-coded feedback,
 * Displays unused, wrong, misplaced, and correct letters
 * Supports quick commands like `--help`, `--quit`, and `--settings`
 
----
 
-## **📦 Requirements**
+
+## Requirements
 
 Make sure you have the required libraries installed:
 
@@ -28,7 +29,7 @@ Make sure you have the required libraries installed:
 pip install -r requirements.txt
 ```
 
----
+
 
 ## **Syntax**
 
@@ -46,9 +47,9 @@ python main.py [--start] [--settings] [--help]
 | `--settings` | Let you change the number of attempts and word length before playing. |
 | `--help`     | Displays help & instructions.                                         |
 
----
 
-## **⚙️ Settings Mode**
+
+## **Settings Mode**
 
 If you choose:
 
@@ -63,20 +64,18 @@ You can configure:
 
 Commands inside settings mode:
 
-* `1` → change attempts
-* `2` → change word length
-* `D` → done, start the game
-* `Q` → quit
+![Example](.\media\settings_example.png "settings example")
 
 ---
 
-## **🕹️ How to Play**
+## **How to Play**
 
 To start the game :
 
 ```bash
 python main.py --start
 ```
+It will start the game with default settings : **Attempts 5 | Word Length 5**
 
 During the game:
 
@@ -93,43 +92,27 @@ You will see:
 
 The game ends when:
 
-* You guess the correct word 🎉
-* OR you exhaust all attempts ❌
+* You guess the correct word 
+* OR you exhaust all attempts 
 
----
 
-## **📁 Project Structure**
 
-```
-main.py
-README.md
-```
+## **Example Gameplay Output**
 
----
 
-## **🧠 Example Gameplay Output**
+![Example](.\media\wordle_example.png "Wordle example")
 
-```
-Kindly give 5 letter word > table
-t  a  b  l  e
 
-MISPLACED LETTERS >>> ['a', 'b']
-CORRECT LETTERS >>> ['l']
-WRONG LETTERS >>> ['e']
-UNUSED LETTERS >>> ['c', 'd', 'f', ...]
-Attempts 1
-```
 
----
 
-## **📝 Notes**
+## **Notes**
 
 * Words are generated using the **wonderwords** library.
 * Color output works on most modern terminals.
 
----
 
-## **📜 License**
+
+## **License**
 
 This project is open-source and free to use.
 
