@@ -35,7 +35,7 @@ In game:
 """)
     
     
-    
+# -------------- SETTING MODE --------------
 def settings_mode():
     attempts = 5
     word_length = 5
@@ -53,6 +53,8 @@ def settings_mode():
         
         choice = input("Choose > ").lower()
         
+        # --- Attempts Logic --------
+        
         if choice == "1":
             while True:
                 try:
@@ -64,6 +66,8 @@ def settings_mode():
                 except ValueError:
                     print(RED + "Numbers only")
                     
+        # ----- Word Length Logic ----------
+        
         elif choice == "2":
             while True:
                 try:
@@ -76,15 +80,34 @@ def settings_mode():
                     print(RED + "Numbers only")
                     
         elif choice == "d":
-            return attempts, word_length
+            return attempts, word_length            # Returning default values
         
         elif choice == "q":
             sys.exit()
             
         else:
             print("Invalid option")
-            
-def score_guess(guess, target):
+
+
+# ------- CHECKING LOGIC -----------
+
+def checker(guess, target):
+    """
+    Docstring for checker :
+    The given func. checks the guess words each letter and compares with each letter of targeted word, based on that it creates a flag for it.
+    Flags are getting stored in result - which we will be using in other func further below.
+    
+    Example:
+        guess  = "plate"
+        target = "apple"
+        
+        Result:
+            ['yellow', 'yellow', 'green', 'red', 'green']
+    
+    :param guess: Input word from user is guess.
+    :param target: Randomly chosen word from Lib is target
+    """
+    
     result = []
     
     for i, ch in enumerate(guess):
@@ -99,6 +122,13 @@ def score_guess(guess, target):
 
 
 def launcher(attempts, word_length):
+    """
+    Docstring for launcher
+    The given func is a launcher which creates a random word , checks its none or not. Further on takes the result and stored flags on it and constructs the color coded output
+    Plus has --quit and --help flags which we can use in answer to stop or to get help.
+    :param attempts: attempts are coming from settings_menu()
+    :param word_length: word_length is coming from settings_menu()
+    """
     
     print(GREEN + f"\nSTARTING GAME | Attempts > {attempts} | Word Length > {word_length}")
     
@@ -118,13 +148,13 @@ def launcher(attempts, word_length):
     wrong_letters = set()
     correct_letters = set()
 
-    print(MAGENTA + "<><><> WELCOME TO WORDLE <><><>\n")
+    print(MAGENTA + "| -- | -- | WELCOME TO WORDLE | -- | -- |\n")
 
     while guessed < attempts:
         
-        input_word = input(CYAN + f"Give {word_length} letter word > ").lower()
+        input_word = input(CYAN + f"Give {word_length} letter word > ").lower()         # Taking user input
         
-        if input_word == "--quit":
+        if input_word == "--quit":                                                      # Edge cases and flags
             sys.exit()
             
         if input_word == "--help":
@@ -141,10 +171,15 @@ def launcher(attempts, word_length):
         
         guessed += 1
         
-        results = score_guess(input_word, generated_word)
+        results = checker(input_word, generated_word)                       # Sending input word and generated word to checker() to check.
         
-        for char, state in zip(input_word, results):            # zip pares the two list
-            
+        for char, state in zip(input_word, results):                        # zip pairs the two list
+            """
+            Docstring for above loop.
+            It takes the output from checker() , stores in results. (All flags)
+            Takes each letter and ties with flag (zip) , based on flag it sorts the data in corresponding set.
+
+            """
             if state == "green":
                 print(GREEN + char, end=" ")
                 correct_letters.add(char)

@@ -36,7 +36,7 @@ pip install -r requirements.txt
 Run the program from the terminal:
 
 ```bash
-python main.py [--start] [--settings] [--help]
+python src\main.py [--start] [--settings] [--help]
 ```
 
 ### **Available Flags**
@@ -54,7 +54,7 @@ python main.py [--start] [--settings] [--help]
 If you choose:
 
 ```bash
-python main.py --settings
+python src\main.py --settings
 ```
 
 You can configure:
@@ -73,7 +73,7 @@ Commands inside settings mode:
 To start the game :
 
 ```bash
-python main.py --start
+python src\main.py --start
 ```
 It will start the game with default settings : **Attempts 5 | Word Length 5**
 
